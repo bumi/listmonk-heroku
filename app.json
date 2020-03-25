@@ -1,0 +1,50 @@
+{
+  "name": "listmonk",
+  "description": "Self-hosted newsletter + mailing list manager",
+  "repository": "https://github.com/bumi/listmonk-heroku",
+  "logo": "https://listmonk.app/static/images/listmonk.svg",
+  "keywords": ["emails", "newsletter"],
+  "scripts": {
+    "postdeploy": "erb config/listmonk.toml.erb > config/listmonk.toml && ./listmonk --config=config/listmonk.toml --install --yes"
+  },
+  "env": {
+    "APP_USERNAME": {
+      "description": "Username to log into the application",
+      "value": ""
+    },
+    "APP_PASSWORD": {
+      "description": "Password to log into the application. 8 character max!",
+      "value": ""
+    },
+    "LISTMONK_root": {
+      "description": "Public root URL of the listmonk installation that'll be used in the messages for linking to images, unsubscribe page etc.",
+      "value": "https://CHANGE.herokuapp.com"
+    },
+    "LISTMONK_from_email": {
+      "description": "The default 'from' e-mail for outgoing e-mail campaigns",
+      "value": ""
+    },
+    "LISTMONK_notify_emails": {
+      "description": "List of e-mail addresses to which admin notifications such as import updates, campaign completion, failure etc. should be sent",
+      "value": "[]"
+    },
+    "LISTMONK_upload__s3__aws_access_key_id": {
+      "description": "AWS Access Key for the user to access the bucket. Leaving it empty would default to use instance IAM role",
+      "value": ""
+    },
+    "LISTMONK_upload__s3__aws_secret_access_key": {
+      "description": "AWS seceret access key",
+      "value": ""
+    },
+    "LISTMONK_upload__s3__bucket": {
+      "description": "S3 bucket name",
+      "value": "listmonk"
+    }
+  },
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nginx"
+    }
+  ],
+  "addons": ["heroku-postgresql"]
+}

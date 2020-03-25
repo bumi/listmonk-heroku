@@ -1,0 +1,82 @@
+daemon off;
+#Heroku dynos have at least 4 cores.
+worker_processes <%= ENV['NGINX_WORKERS'] || 4 %>;
+
+events {
+  use epoll;
+  accept_mutex on;
+  worker_connections <%= ENV['NGINX_WORKER_CONNECTIONS'] || 1024 %>;
+}
+
+http {
+  gzip on;
+  gzip_comp_level 2;
+  gzip_min_length 512;
+  server_tokens off;
+  log_format l2met 'measure#nginx.service=$request_time request_id=$http_x_request_id';
+  access_log <%= ENV['NGINX_ACCESS_LOG_PATH'] || 'logs/nginx/access.log' %> l2met;
+  error_log <%= ENV['NGINX_ERROR_LOG_PATH'] || 'logs/nginx/error.log' %>;
+
+  include mime.types;
+  default_type application/octet-stream;
+  sendfile on;
+
+  #Must read the body in 5 seconds.
+  client_body_timeout 5;
+
+  upstream listmonk {
+    server localhost:9000;
+  }
+
+  server {
+    listen <%= ENV["PORT"] %>;
+    server_name _;
+    keepalive_timeout 5;
+
+    location / {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      # Protect all routes by default with basicauth.
+      auth_basic "Admin";
+      auth_basic_user_file /app/config/htpasswd;
+
+      proxy_pass http://listmonk;
+    }
+
+    # Public endpoints that should not be behind auth.
+    location /subscription {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+
+      proxy_pass http://listmonk;
+    }
+
+    location /link {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+
+      proxy_pass http://listmonk;
+    }
+
+    location /public {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_pass http://listmonk;
+
+      gzip_static on;
+    }
+
+    location ~ /campaign/(.+?).png {
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+
+      # Tracking pixel.
+      proxy_pass http://listmonk;
+    }
+  }
+}
