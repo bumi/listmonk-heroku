@@ -28,6 +28,10 @@
       "description": "List of e-mail addresses to which admin notifications such as import updates, campaign completion, failure etc. should be sent",
       "value": "[]"
     },
+    "LISTMONK_concurrency": {
+      "description": "Maximum concurrent workers that will attempt to send messages simultaneously",
+      "value": "5"
+    },
     "LISTMONK_upload__s3__aws_access_key_id": {
       "description": "AWS Access Key for the user to access the bucket. Leaving it empty would default to use instance IAM role",
       "value": ""
