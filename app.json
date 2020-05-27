@@ -16,23 +16,23 @@
       "description": "Password to log into the application. 8 character max!",
       "value": ""
     },
-    "LISTMONK_root": {
+    "LISTMONK_app__root": {
       "description": "Public root URL of the listmonk installation that'll be used in the messages for linking to images, unsubscribe page etc.",
       "value": "https://CHANGE.herokuapp.com"
     },
-    "LISTMONK_from_email": {
+    "LISTMONK_app__from_email": {
       "description": "The default 'from' e-mail for outgoing e-mail campaigns",
       "value": ""
     },
-    "LISTMONK_notify_emails": {
+    "LISTMONK_app__notify_emails": {
       "description": "List of e-mail addresses to which admin notifications such as import updates, campaign completion, failure etc. should be sent",
       "value": "[]"
     },
-    "LISTMONK_concurrency": {
+    "LISTMONK_app__concurrency": {
       "description": "Maximum concurrent workers that will attempt to send messages simultaneously",
       "value": "5"
     },
-    "LISTMONK_message_rate": {
+    "LISTMONK_app__message_rate": {
       "description": "Maximum number of messages to be sent out per second per worker. This, along with concurrency, should be tweaked to keep the net messages going out per second under the target limit",
       "value": "5"
     },
