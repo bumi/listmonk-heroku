@@ -40,40 +40,5 @@ http {
 
       proxy_pass http://listmonk;
     }
-
-    # Public endpoints that should not be behind auth.
-    location /subscription {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
-
-      proxy_pass http://listmonk;
-    }
-
-    location /link {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
-
-      proxy_pass http://listmonk;
-    }
-
-    location /public {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
-      proxy_pass http://listmonk;
-
-      gzip_static on;
-    }
-
-    location ~ /campaign/(.+?).png {
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_set_header Host $http_host;
-      proxy_redirect off;
-
-      # Tracking pixel.
-      proxy_pass http://listmonk;
-    }
   }
 }
