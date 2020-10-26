@@ -11,11 +11,12 @@ This Heroku deploy button allows you to deploy your own [listmonk](https://listm
 ## Things you shoud know
 
 ### Configuration
-The button requires a minimum of configuration variables. You have to set further configuration variables to be able to send emails.
-See [Listmonk configuration](https://github.com/knadh/listmonk/wiki/Configuration#environment-variables) for details and available options.
+You must update the "Settings" and configure at least: 
 
-Alternatively you can fork this repository and adjust config/listmonk.toml.erb and deploy it from your fork: `https://heroku.com/deploy?template=https://github.com/[YOUR REPOSITORY]`
-
+* General > Root URL
+* General > Logo URL
+* Media uploads > Provider - Use S3!
+* SMTP - Currently configuration from heroku email addons is not automatically loaded and must be configured here
 
 ### Database size
 Currently a PostgreSQL hobby add-on will be used. For production use with more than a few thousand subscribers you will need to upgrade the add-on.
