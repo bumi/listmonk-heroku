@@ -8,11 +8,11 @@
     "postdeploy": "erb config/listmonk.toml.erb > config/listmonk.toml && ./listmonk --config=config/listmonk.toml --install --yes"
   },
   "env": {
-    "APP_USERNAME": {
+    "LISTMONK_app__admin_username": {
       "description": "Username to log into the application",
       "value": ""
     },
-    "APP_PASSWORD": {
+    "LISTMONK_app__admin_password": {
       "description": "Password to log into the application. 8 character max!",
       "value": ""
     },
