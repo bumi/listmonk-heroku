@@ -6,6 +6,8 @@ address = "0.0.0.0:9000"
 # in the messages for linking to images, unsubscribe page etc.
 root = "<%= ENV['LISTMONK_root'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com" %>"
 
+<% require 'uri' %>
+
 # Database.
 [db]
 host = "<%= URI.parse(ENV['DATABASE_URL']).host %>"
