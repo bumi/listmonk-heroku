@@ -6,8 +6,7 @@ address = "0.0.0.0:9000"
 # in the messages for linking to images, unsubscribe page etc.
 root = "<%= ENV['LISTMONK_root'] || "https://#{ENV['HEROKU_APP_NAME']}.herokuapp.com" %>"
 
-<% require 'uri' %>
-
+<% require 'uri' # not sure why uri needs to be explicityl required %>
 # Database.
 [db]
 host = "<%= URI.parse(ENV['DATABASE_URL']).host %>"
@@ -16,19 +15,3 @@ user = "<%= URI.parse(ENV['DATABASE_URL']).user %>"
 password = "<%= URI.parse(ENV['DATABASE_URL']).password %>"
 database = "<%= URI.parse(ENV['DATABASE_URL']).path.gsub(/^\//, '') %>"
 ssl_mode = "require"
-
-# Maximum active and idle connections to pool.
-max_open = 50
-max_idle = 10
-
-# Upload settings
-[upload]
-provider = "s3"
-
-# S3 Provider settings
-[upload.s3]
-aws_default_region = "<%= ENV['LISTMONK_upload__s3__aws_default_region'] || 'eu-central-1' %>"
-bucket = "<%= ENV['LISTMONK_upload__s3__bucket'] || 'listmonk' %>"
-bucket_path = "<%= ENV['LISTMONK_upload__s3__bucket_path'] %>"
-bucket_type = "<%= ENV['LISTMONK_upload__s3__bucket_type'] || 'public' %>"
-expiry = "<%= ENV['LISTMONK_upload__s3__expiry'] || 86400 %>"
