@@ -1,5 +1,11 @@
 # Listmonk Heroku deploy button
 
+---
+
+## PLEASE USE THE OFFICIAL [LISTMONK HEROKU BUILDPACK](https://github.com/knadh/listmonk-heroku)
+
+---
+
 Listmonk is a self-hosted newsletter + mailing list manager.
 Visit the project's website at https://listmonk.app, or find the source code at https://github.com/knadh/listmonk
 
